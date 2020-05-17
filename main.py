@@ -21,16 +21,20 @@ while True:
 
     # file count & total
     i = 0
-    total = len([x for x in os.listdir(dir_path)])
+    total = len([x for x in os.listdir(dir_path) if os.path.isfile(os.path.join(dir_path, x))])
 
     # loop through directory
     for file in os.listdir(dir_path):
 
-        # update count
-        i += 1
-
         # file path
         file_path = os.path.join(dir_path, file)
+
+        # don't count directories
+        if os.path.isdir(file_path):
+            continue
+
+        # update count
+        i += 1
 
         # check if file
         if not (os.path.isfile(file_path) and os.path.splitext(file_path)[1].lower() == ".png"):
