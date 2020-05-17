@@ -1,50 +1,75 @@
 import os
-from os import path
 import time
 import calendar
+import sys
 
 # month dictionary
 months = {v: k for k,v in enumerate(calendar.month_abbr)}
 
-# get path of directory
-dir_path = input("Enter directory path: ")
+# indefinite loop
+while True:
 
-# loop through directory
-for file in os.listdir(dir_path):
+    # get path of directory
+    dir_path = ""
+    while True:
+        dir_path = input("Enter directory path: ")
+        if not os.path.isdir(dir_path):
+            print("Invalid directory path.")
+            continue
+        else:
+            break
 
-    # file path
-    file_path = os.path.join(dir_path, file)
+    # file count & total
+    i = 0
+    total = len([x for x in os.listdir(dir_path)])
 
-    # get ctime as string
-    ctime = time.ctime(os.path.getmtime(file_path))
+    # loop through directory
+    for file in os.listdir(dir_path):
 
-    # screenshots' ctime will be in this format:
-    # DOW MON DY HH:MM:SS YYYY
-    # 012345678901234567890123
+        # update count
+        i += 1
 
-    # replace white space with 0
-    ctime = ctime.replace(" ", "0")
+        # file path
+        file_path = os.path.join(dir_path, file)
 
-    # properties
-    year = ctime[20:]
-    month = ctime[4:7]
-    day = ctime[8:10]
-    hour = ctime[11:13]
-    min = ctime[14:16]
-    sec = ctime[17:19]
+        # check if file
+        if not (os.path.isfile(file_path) and os.path.splitext(file_path)[1].lower() == ".png"):
+            print("Skipping %s. (not a PNG file)" % file)
+            continue
 
-    # convert month from name -> num
-    month = str(months[month])
-    # add leading zero
-    if len(month) == 1:
-        month = "0" + month
+        # get mtime as string
+        mtime = time.ctime(os.path.getmtime(file_path))
 
-    # create new name
-    file_date = [year, month, day]
-    file_date_separator = "-"
-    file_time = [hour, min, sec]
-    file_time_separator = ":"
-    new_name = file_date_separator.join(file_date) + "_" + file_time_separator.join(file_time)
+        # screenshots' mtime will be in this format:
+        # DOW MON DY HH:MM:SS YYYY
+        # 012345678901234567890123
 
-    # print new name
-    print("new name: %s" % new_name)
+        # replace white space with 0
+        mtime = mtime.replace(" ", "0")
+
+        # properties
+        year = mtime[20:]
+        month = mtime[4:7]
+        day = mtime[8:10]
+        hour = mtime[11:13]
+        min = mtime[14:16]
+        sec = mtime[17:19]
+
+        # convert month from name -> num
+        month = str(months[month])
+        # add leading zero
+        if len(month) == 1:
+            month = "0" + month
+
+        # create new name
+        file_date = [year, month, day]
+        file_date_separator = "-"
+        file_time = [hour, min, sec]
+        file_time_separator = ":"
+        new_name = file_date_separator.join(file_date) + "_" + file_time_separator.join(file_time)
+
+        # print progress
+        print("Converting %i of %i..." % (i, total), end="\r")
+
+    # finished
+    print("\nDone.\n")
