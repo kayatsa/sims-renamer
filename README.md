@@ -14,7 +14,7 @@ To ensure that you have all packages needed to run this script successfully, ent
 
 This script is meant to rename Sims 4 screenshots since the default file name does not allow them to be ordered alphabetically and chronologically at the same time.
 
-The files will be renamed to the format **YYYY-MM-DD_HH:MM:SS**, corresponding to the file's "Last modified" date and time.
+The files will be renamed to the format **YYYY-MM-DD_HH-MM-SS**, corresponding to the file's "Last modified" date and time.
 
 This script can be used to rename any PNG file; it only checks if the files are PNG, not if they are screenshots from the Sims 4.
 
@@ -25,7 +25,7 @@ This script can be used to rename any PNG file; it only checks if the files are 
 
 ## Pending Features
 
-This script runs into an error when multiple files have the same "Last modified" date and time. The next feature will be to check for these errors and rename them to **YYYY-MM-DD_HH:MM:SS**, **YYYY-MM-DD_HH:MM:SS_1**, and so on.
+This script runs into an error when multiple files have the same "Last modified" date and time. The next feature will be to check for these errors and rename them to **YYYY-MM-DD_HH-MM-SS**, **YYYY-MM-DD_HH-MM-SS_1**, and so on.
 
 ## Contributing
 
