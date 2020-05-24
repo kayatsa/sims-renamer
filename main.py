@@ -36,6 +36,9 @@ while True:
         # update count
         i += 1
 
+        # print progress
+        print("Converting %i of %i..." % (i, total), end="\r")
+
         # check if file
         if not (os.path.isfile(file_path) and os.path.splitext(file_path)[1].lower() == ".png"):
             print("Skipping %s. (not a PNG file)" % file)
@@ -67,13 +70,13 @@ while True:
 
         # create new name
         file_date = [year, month, day]
-        file_date_separator = "-"
         file_time = [hour, min, sec]
-        file_time_separator = ":"
-        new_name = file_date_separator.join(file_date) + "_" + file_time_separator.join(file_time)
+        file_separator = "-"
+        new_name = file_separator.join(file_date) + "_" + file_separator.join(file_time) + ".png"
+        new_path = os.path.join(dir_path, new_name)
 
-        # print progress
-        print("Converting %i of %i..." % (i, total), end="\r")
+        # rename
+        os.rename(file_path, new_path)
 
     # finished
     print("\nDone.\n")
