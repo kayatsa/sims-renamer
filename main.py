@@ -2,6 +2,7 @@ import os
 import time
 import calendar
 import sys
+import errno
 
 # month dictionary
 months = {v: k for k,v in enumerate(calendar.month_abbr)}
@@ -75,8 +76,35 @@ while True:
         new_name = file_separator.join(file_date) + "_" + file_separator.join(file_time) + ".png"
         new_path = os.path.join(dir_path, new_name)
 
-        # rename
-        os.rename(file_path, new_path)
+        # attempt to rename
+        attempt = 0
+        new_path_fix = new_path
+
+        while True:
+
+            # increment attempt
+            attempt += 1
+
+            # try renaming
+            try:
+                os.rename(file_path, new_path_fix)
+                # if successful, exit loop
+                break
+
+            # rename failed
+            except OSError as e:
+
+                # duplicate name
+                if e.errno == errno.EEXIST:
+
+                    # attach number at end
+                    new_path_fix = os.path.splitext(new_path)[0] + "_" + str(attempt) + os.path.splitext(new_path)[1]
+                    # try again
+                    continue
+
+                # other exception
+                else:
+                    raise
 
     # finished
     print("\nDone.\n")
