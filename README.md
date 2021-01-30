@@ -25,7 +25,7 @@ This script can be used to rename any PNG file; it only checks if the files are 
 
 ## Pending Features
 
-This script runs into an error when multiple files have the same "Last modified" date and time. The next feature will be to check for these errors and rename them to **YYYY-MM-DD_HH-MM-SS**, **YYYY-MM-DD_HH-MM-SS_1**, and so on.
+No pending features.
 
 ## Contributing
 
