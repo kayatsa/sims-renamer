@@ -7,6 +7,9 @@ import errno
 # month dictionary
 months = {v: k for k,v in enumerate(calendar.month_abbr)}
 
+# exception handling - abort program if true
+abort = False
+
 # indefinite loop
 while True:
 
@@ -80,6 +83,7 @@ while True:
         attempt = 0
         new_path_fix = new_path
 
+        # exception handling
         while True:
 
             # increment attempt
@@ -96,15 +100,23 @@ while True:
 
                 # duplicate name
                 if e.errno == errno.EEXIST:
-
                     # attach number at end
                     new_path_fix = os.path.splitext(new_path)[0] + "_" + str(attempt) + os.path.splitext(new_path)[1]
                     # try again
                     continue
 
+                # permission denied
+                elif e.errno == errno.EACCES:
+                    print("\nAccess is denied. Please try a different directory.\n")
+                    abort = True
+                    break
+
                 # other exception
                 else:
                     raise
 
+        # abort if exception handling failed
+        if abort: break
+
     # finished
-    print("\nDone.\n")
+    if not abort: print("\nDone.\n")
